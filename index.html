@@ -1,168 +1,196 @@
 <!DOCTYPE html>
-<html>
-    <head>
-        <meta charset=""UTF-8>
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>CashMetrics</title>
-    </head>
-    <style>
-        * {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
-}
-
-.container{
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stock Dashboard</title>
+<style>body {
+    font-family: Arial, sans-serif;
     display: flex;
-    flex-direction: row;
     height: 100vh;
-    overflow: hidden;
+    margin: 0;
 }
 
-.left-panel {
+.container {
+    display: flex;
+    width: 100%;
+}
+
+.sidebar {
     width: 20%;
-    border: 1px solid #ccc ;
-    box-sizing: border-box;
-    color: white;
-    background-color: rgb(23, 7, 64);
-    display: flex;
-    flex-direction: column;
-}
-.logo-container{
-    display: flex;
-    align-items: center;
-    text-align: center;
-    background-color:rgb(23, 7, 64);
-}
-
-.logo{
-    width: 80%px;
-    max-width: 150px;
-    height: 100px;
-}
-.logo-text{
-    color: rgb(0, 255, 255);
-    font-size: 1.6em;
-    font-weight: bold;
-    margin-bottom: 10px;
-    margin-top: 14px;
-    margin-left: 10px;
-}
-.buttons-container{
-    margin-bottom: 10px;
-}
-
-.button-box{
-    border: 1px solid #ccc;
+    background-color: #333;
+    color: #fff;
     padding: 20px;
-    border-radius: 10px;
-}
-.button-box a {
-    color: rgb(0, 255, 255);
-    text-decoration: none;
+    box-sizing: border-box;
 }
 
-.button-box:hover{
+.sidebar h2, .sidebar h3 {
+    margin: 0 0 10px 0;
+    margin-top: 10px;
+
+}
+h2{
+    color: aqua;
+}
+h3{
+    color: aqua;
+}
+h4{
+    font-size: larger;
+}
+.sidebar input {
+    margin-top: 10px;
+
+}
+
+.current-price p {
+    font-size: 2em;
+    margin: 0;
+}
+
+.main-content {
+    width: 80%;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+.tabs {
+    display: flex;
+    margin-bottom: 20px;
+}
+
+.tab-button {
+    background-color: #444;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
     cursor: pointer;
 }
-.button-box a:hover{
-    color: rgb(255, 255, 255);
-}
-.right-panel {
-    width: 80%;
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    grid-template-rows: auto auto auto;
-    grid-gap: 10px;
+
+.tab-button.active {
+    background-color: #007bff;
 }
 
-.overview{
-    grid-column: 1/ span 1;
-    grid-row: 1;
+.tab-content {
+    display: none;
 }
 
-.brands{
-    grid-column: 2/ span 1;
-    grid-row: 1;
+.tab-content.active {
+    display: block;
 }
 
-.earnings {
-    grid-column: 1/ span 3;
-    grid-row: 2;
+canvas {
+    width: 100%;
+    height: 400px;
+    background-color: #1e1e1e;
 }
-
-
-.average-earnings{
-    grid-column: 1/ span 1;
-    grid-row: 3;
-}
-.expenses{
-    grid-column: 2/ span 1;
-    grid-row: 3;
-}
-
-.overview, .brands, .earnings, .average-earnings, .expenses {
-    min-width: 100%; 
-    max-width: 400px; 
-    max-height: 200px;
-    margin: 10px;
-    padding: 20px;
-    border: 1px solid #ccc;
-    border-radius: 10px;
-    text-align: center;
-    background-color: #f9f9f9;
-}
-
-
-@media screen and (max-width: 768px){
-    .container{
-        flex-direction: row;
-    }
-    .left-panel, .right-panel{
-        width: 100%;
-    }
-    .logo{
-        width: 100%;
-    }
-}
-@media screen and (max-width: 480px){
-    .logo{
-        width: 50%;
-    }
-}
-    </style>
-    <body>
-        <div class="container">
-        <div class="left-panel">
-            <div class="logo-container">
-                <img class="logo" src="https://as1.ftcdn.net/v2/jpg/07/40/64/54/1000_F_740645430_2LKSU0WC8GLb38j2geN0JQD1Ed5L3O6o.jpg" alt="CashMetrics logo">
-                <div class="logo-text">CashMetrics</div>
+</style>
+</head>
+<body>
+    <div class="container">
+        <div class="sidebar">
+            <div class="current-price">
+                <h2>Current Price</h2>
+                <p>392$</p>
             </div>
-            <div class="buttons-container">
-                <div class="button-box">
-                        <li><a href="#">Dashboard</a></li>
-                    </div>
-                    <div class="button-box">
-                        <li><a href="#">Brands</a></li>
-                    </div>
-                    <div class="button-box">
-                        <li><a href="#">Sales</a></li>
-                    </div>
-                    <div class="button-box">
-                        <li><a href="#">Expenses</a></li>
-                    </div>
-                    <div class="button-box">
-                        <li><a href="#">Settings</a></li>
-                    </div>
+            <div class="date-range">
+                <h3>Date Range</h3>
+                <input type="checkbox" id="1day"><label for="1day">1 Day</label><br>
+                <input type="checkbox" id="1hour"><label for="1hour">1 Hour</label><br>
+                <input type="checkbox" id="15min"><label for="15min">15 Minutes</label>
+            </div>
+            
+            <div class="price-change-range">
+                <h3>Price Change Range</h3>
+                <input type="checkbox" id="1day-pc"><label for="1day-pc">1 Day</label><br>
+                <input type="checkbox" id="1hour-pc"><label for="1hour-pc">1 Hour</label><br>
+                <input type="checkbox" id="15min-pc"><label for="15min-pc">15 Minutes</label>
+            </div>
+            <div class="graph-type">
+                <h3>Graph Type</h3>
+                <input type="radio" name="graph-type" id="candlestick"><label for="candlestick">Candlestick</label><br>
+                <input type="radio" name="graph-type" id="linechart"><label for="linechart">Line Chart</label>
+            </div>
+            <div class="technical-analysis">
+                <h3>Technical Analysis</h3>
+                <input type="checkbox" id="ma"><label for="ma">Moving Averages</label><br>
+                <input type="checkbox" id="rsi"><label for="rsi">RSI</label>
             </div>
         </div>
-        <div class="right-panel">
-                <div class="overview">Overview</div>
-                <Div class="earnings">Earnings</Div>
-                <div class="expenses">Expenses</div>
-                <div class="average-earnings">Average Earnings</div>
-                <div class="brands">Brands</div>
+        <div class="main-content">
+            <div class="tabs">
+                <button class="tab-button" onclick="openTab('overview')">Overview</button>
+                <button class="tab-button" onclick="openTab('apple')">Apple</button>
+                <button class="tab-button active" onclick="openTab('apple-ma')">Apple-MA</button>
+            </div>
+            <div id="overview" class="tab-content">
+                <h4>Overview</h4>
+                <canvas id="chart"></canvas>
+
+            </div>
+            <div id="apple" class="tab-content">
+                <h4>Apple</h4>
+                <canvas id="chart"></canvas>
+
+            </div>
+            <div id="apple-ma" class="tab-content active">
+                <h4>Apple-MA</h4>
+                <canvas id="chart"></canvas>
+            </div>
         </div>
     </div>
-    </body>
+    <script>
+        function openTab(tabName) {
+    const tabContents = document.getElementsByClassName('tab-content');
+    const tabButtons = document.getElementsByClassName('tab-button');
+    
+    for (let i = 0; i < tabContents.length; i++) {
+        tabContents[i].classList.remove('active');
+    }
+    
+    for (let i = 0; i < tabButtons.length; i++) {
+        tabButtons[i].classList.remove('active');
+    }
+    
+    document.getElementById(tabName).classList.add('active');
+    document.querySelector(`.tab-button[onclick="openTab('${tabName}')"]`).classList.add('active');
+}
+
+document.addEventListener('DOMContentLoaded', (event) => {
+    const ctx = document.getElementById('chart').getContext('2d');
+    new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul'],
+            datasets: [{
+                label: 'Stock Price',
+                data: [176.32, 180.45, 174.55, 178.45, 182.75, 185.32, 192.45],
+                borderColor: 'rgb(75, 192, 192)',
+                tension: 0.1
+            }]
+        },
+        options: {
+            responsive: true,
+            scales: {
+                x: {
+                    display: true,
+                    title: {
+                        display: true,
+                        text: 'Month'
+                    }
+                },
+                y: {
+                    display: true,
+                    title: {
+                        display: true,
+                        text: 'Price ($)'
+                    }
+                }
+            }
+        }
+    });
+});
+
+    </script>
+</body>
 </html>
